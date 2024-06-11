@@ -4,18 +4,13 @@ function Gameboard() {
   const dimension = 3;
 
   for (let i = 0; i < dimension; i++) {
-    gameboard.push([])
+    gameboard.push([]);
     
     for (let j = 0; j < dimension; j++) {
       gameboard[i].push([]);
     }
 
   }
-
-
-
-  // get 0 - dimension = index x index
-
 
   const getGameboard = () => gameboard;
 
@@ -24,10 +19,34 @@ function Gameboard() {
 }
 
 function Controller() {
+  
+  //get players
+
+  //random who goes first
+
+  //switch turns
 
   board = Gameboard()
 
   return board;
+
+}
+
+function Player(player1, player2) {
+
+  players = [
+    {
+      player1,
+      marker: 'X'
+    },
+
+    {
+      player2,
+      marker: 'O'
+    }
+  ]
+
+  // when player makes a move append gameboard with player marker
 
 }
 
