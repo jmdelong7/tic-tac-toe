@@ -1,39 +1,37 @@
-function Gameboard() {
+const gameboard = (function Gameboard() {
   
+  // Private
   const gameboard = [];
   const dimension = 3;
 
-  // add rows as arrays to gameboard
+  // Add rows as arrays to gameboard
   for (let i = 0; i < dimension; i++) {
     const arr = new Array(dimension);
     gameboard.push(arr);
   }
 
+  // Public
+  // Return function that shows the gameboard
+  // Gameboard can't be modified
+  return {getGameboard: function() {
+    console.log(gameboard)
+  }}
+
+})()
+
+function Controller() {
+
   playerChoice = 4;
   symbol = 'X';
 
   if (playerChoice >= 0 && playerChoice < 3) {
-    gameboard[0][playerChoice] = symbol;
+    board[0][playerChoice] = symbol;
   } else if (playerChoice >= 3 && playerChoice < 5) {
-    gameboard[1][playerChoice - 3] = symbol;
+    board[1][playerChoice - 3] = symbol;
   } else if (playerChoice >= 6 && playerChoice < 8) {
-    gameboard[2][playerChoice - 6] = symbol;
+    board[2][playerChoice - 6] = symbol;
   }
 
-
-  function updateGameboard() {
-    
-  }
-
-  // add x or o to gameboard based on position
-
-  const getGameboard = () => gameboard;
-
-  return { getGameboard }
-
-}
-
-function Controller() {
   
   // if player makes move, use correct value
 
@@ -47,7 +45,6 @@ function Controller() {
 
   //player can choose 1 - 9 based on current gameboard
 
-  board = Gameboard()
 
   return board;
 
