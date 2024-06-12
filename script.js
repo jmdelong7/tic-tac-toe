@@ -9,18 +9,27 @@ function Gameboard() {
     gameboard.push(arr);
   }
 
-  let test = 'X';
-  playerChoice = 1;
+  playerChoice = 4;
+  symbol = 'X';
 
-  if (playerChoice > 0 < 3) {
-    gameboard[0][playerChoice] = test;
+  if (playerChoice >= 0 && playerChoice < 3) {
+    gameboard[0][playerChoice] = symbol;
+  } else if (playerChoice >= 3 && playerChoice < 5) {
+    gameboard[1][playerChoice - 3] = symbol;
+  } else if (playerChoice >= 6 && playerChoice < 8) {
+    gameboard[2][playerChoice - 6] = symbol;
+  }
+
+
+  function updateGameboard() {
+    
   }
 
   // add x or o to gameboard based on position
 
   const getGameboard = () => gameboard;
 
-  return {getGameboard}
+  return { getGameboard }
 
 }
 
@@ -46,19 +55,20 @@ function Controller() {
 
 function Player(player1, player2) {
 
-  players = [
+  const players = [
     {
-      player1,
-      marker: 'X'
+      name: player1,
+      symbol: 'X'
     },
 
     {
-      player2,
-      marker: 'O'
+      name: player2,
+      symbol: 'O'
     }
   ]
 
-  // when player makes a move append gameboard with player marker
+  const getPlayers = () => players;
+  return { getPlayers }
 
 }
 
