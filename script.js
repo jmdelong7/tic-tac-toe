@@ -3,14 +3,20 @@ function Gameboard() {
   const gameboard = [];
   const dimension = 3;
 
+  // add rows as arrays to gameboard
   for (let i = 0; i < dimension; i++) {
-    gameboard.push([]);
-    
-    for (let j = 0; j < dimension; j++) {
-      gameboard[i].push([]);
-    }
-
+    const arr = new Array(dimension);
+    gameboard.push(arr);
   }
+
+  let test = 'X';
+  playerChoice = 1;
+
+  if (playerChoice > 0 < 3) {
+    gameboard[0][playerChoice] = test;
+  }
+
+  // add x or o to gameboard based on position
 
   const getGameboard = () => gameboard;
 
@@ -20,11 +26,17 @@ function Gameboard() {
 
 function Controller() {
   
+  // if player makes move, use correct value
+
   //get players
 
   //random who goes first
 
   //switch turns
+
+  //must return position selected by player
+
+  //player can choose 1 - 9 based on current gameboard
 
   board = Gameboard()
 
