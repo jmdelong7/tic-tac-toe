@@ -1,4 +1,6 @@
-const gameboard = (function Gameboard() {
+let game;
+
+(function Gameboard() {
   
   // Private
   const gameboard = [];
@@ -11,25 +13,48 @@ const gameboard = (function Gameboard() {
   }
 
   // Public
-  // Return function that shows the gameboard
+  // Set game to return gameboard when invoked
   // Gameboard can't be modified
-  return {getGameboard: function() {
-    console.log(gameboard)
-  }}
+
+  game = function() {
+    return gameboard;
+  }
 
 })()
 
 function Controller() {
 
+  // Make player selection method on player object
+  
+  const players = players.getPlayers();
+
+  function firstTurn() {
+    return Math.random() >= 0.5 ? players[1]: players[0];
+  }
+
+  // Make turn switcher
+  let counter = 0;
+  if (counter === 0) {
+    
+  }
+
+  players[0].symbol
+
   playerChoice = 4;
   symbol = 'X';
+  let boardPosition;
 
+  // This should return position to push symbol
   if (playerChoice >= 0 && playerChoice < 3) {
-    board[0][playerChoice] = symbol;
+    boardPosition = board[0][playerChoice];
   } else if (playerChoice >= 3 && playerChoice < 5) {
-    board[1][playerChoice - 3] = symbol;
+    boardPosition = board[1][playerChoice - 3];
   } else if (playerChoice >= 6 && playerChoice < 8) {
-    board[2][playerChoice - 6] = symbol;
+    boardPosition = board[2][playerChoice - 6]
+  }
+
+  function displaySymbol(boardPosition) {
+    boardPosition = player.symbol;
   }
 
   
