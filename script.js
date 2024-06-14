@@ -32,3 +32,30 @@ function Controller() {
   }
 
 }
+
+function Player(player1, player2) {
+
+  function choosePosition(choice) {
+    this.position = choice;
+    this.positionHistory.push(choice);
+  };
+
+  const players = 
+  [
+    {
+    name: player1,
+    symbol: 'X',
+    choosePosition,
+    positionHistory: []
+    },
+  
+    {
+    name: player2,
+    symbol: 'O',
+    choosePosition,
+    positionHistory: []
+    }
+  ]
+
+  return players;
+}
