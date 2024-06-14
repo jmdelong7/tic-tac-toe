@@ -25,7 +25,7 @@ function Controller() {
     let turn;
 
     if (players[0].positionHistory > 5) {
-      endGame();
+      console.log('end game')
     } else if (players[0].positionHistory.length === 0) {
       turn = players[0];
     } else if (players[0].positionHistory.length < players[1].positionHistory.length){
@@ -52,11 +52,31 @@ function Controller() {
     }
   }
 
-  function endGame(){
+
+  // Don't use grid, use players.positionHistory to determine winner
+  // Also have to deny overwrite of gridArr values.
+  const gridArr = grid.displayGrid();
+  const isSameValue = (value) => value === value;
+
+  function determineWinner() {
+    for (let i = 0; i < 3; i++){
+      if (gridArr[i].every(isSameValue)) {
+        console.log(`${gridArr[i]}`)
+        return gridArr[i];
+      }
+    }
 
   }
 
+  function endGame() {
+    console.log("Game over.")
+    function determineWinner() {
+    }
+  }
+
   playerSelection(players[0], position);
+
+  determineWinner();
 
 }
 
