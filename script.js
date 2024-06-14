@@ -18,8 +18,11 @@ const grid = (function Grid() {
 
 function Controller() {
 
-  let turn;
-  let position;
+  const players = Players();
+
+  players[0].choosePosition(4);
+
+  let position = players[0].position;
 
   function playerSelection(player, position) {
     if (position >= 0 && position < 3) {
@@ -31,9 +34,11 @@ function Controller() {
     }
   }
 
+  playerSelection(players[0], position);
+
 }
 
-function Player(player1, player2) {
+function Players() {
 
   function choosePosition(choice) {
     this.position = choice;
@@ -43,14 +48,14 @@ function Player(player1, player2) {
   const players = 
   [
     {
-    name: player1,
+    name: "John",
     symbol: 'X',
     choosePosition,
     positionHistory: []
     },
   
     {
-    name: player2,
+    name: "Sue",
     symbol: 'O',
     choosePosition,
     positionHistory: []
