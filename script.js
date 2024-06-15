@@ -4,42 +4,45 @@
 //   - Declare winner.
 //   - If 9 spots are filled and no winner, declare game over.
 //   - To declare winner we need to:
-//     - Check each grid row for all same symbol.
-//     - Check each grid column for all same symbol.
+//     - Check each board row for all same symbol.
+//     - Check each board column for all same symbol.
 //     - Check both diagonals for all same symbol.
 //   - To declare game over we need to:
-//     - Check that all grid cells are filled.
+//     - Check that all board cells are filled.
 
-let grid = [["X", "X", "X"],["O", "X", "O"],["O", "X", "O"]];
+let board = [["X", "X", "X"],["O", "X", "O"],["O", "X", "O"]];
+// Use .fill to fill arrays with blank values
 
 // later: function to check for both symbols
 
 const columnWinCondition = [[0, 3, 6][1, 4, 7], [2, 5, 8]];
 
-function checkWinnerInColumns(grid) {
+function checkWinnerInColumns(board) {
 
-  for (let i = 0; i < grid.length; i++) {
+  for (let i = 0; i < board.length; i++) {
     let columnArray = [];
-    for (let j = 0; j < grid.length; j++) {
-      columnArray.push(grid[j][i]);
+    for (let j = 0; j < board.length; j++) {
+      columnArray.push(board[j][i]);
     }
   }
 
 }
 
 
+function hasWinnerInRows(board) {
 
-function checkWinnerInRows(grid, symbol) {
+  const isWinner = [];
 
-  for (let i = 0; i < grid.length; i++) {
-    const gridRowCheck = grid[i].every((sym) => {
-      return sym === symbol;
-    })
+  board.forEach( (row) => {
+    if (hasAllSameSymbol(row)) {
+      [isWinner[0], isWinner[1]] = [board.indexOf(row), row[0]]
+    }
+  })
 
-    return gridRowCheck;
+  return isWinner;
 
-  }
 }
+
 
 function hasAllSameSymbol(arr) {
   return arr.every((sym) => {return sym === arr[0]});
