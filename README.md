@@ -1,12 +1,12 @@
 # tic-tac-toe
 
-- If 3 of same symbol in a row - declare winner.
 - Player click on cell in grid.
 - Place "X" in grid cell.
 - Change turns.
 - Computer pick random open cell and place "O".
-- Repeat steps 2 - 5 until grid is full.
-- If 3 of same symbol in a row - declare winner. Or declare game over if no 3 in a row.
+- If 3 of same symbol in a row - declare winner. 
+- If 9 grid cells are filled - declare game over.
+- Repeat above steps until winner or game over.
 - Clear grid.
 
 - If 3 of same symbol in a row - declare winner.
@@ -18,3 +18,5 @@
     - Check each grid row for all same symbol.
     - Check each grid column for all same symbol.
     - Check both diagonals for all same symbol.
+  - To declare game over we need to:
+    - Check that all grid cells are filled.

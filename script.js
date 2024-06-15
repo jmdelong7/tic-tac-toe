@@ -1,123 +1,28 @@
-const grid = (function Grid() {
+// - If 3 of same symbol in a row - declare winner.
+//   - Array of 3 arrays.
+//   - Check if 3 of the same symbols are in a straight line.
+//   - Declare winner.
+//   - If 9 spots are filled and no winner, declare game over.
+//   - To declare winner we need to:
+//     - Check each grid row for all same symbol.
+//     - Check each grid column for all same symbol.
+//     - Check both diagonals for all same symbol.
+//   - To declare game over we need to:
+//     - Check that all grid cells are filled.
 
-  const gridArr = [[],[],[]];
+let grid = [["X", "X", "X"],["O", "X", "O"],["O", "X", "O"]];
 
-  // Symbol needs to be correct player's symbol
-  // gridArr needs to be player's choice
-  function addSymbol(row, col, symbol){
-    return gridArr[row][col] = symbol;
-  }
-
-  function displayGrid() {
-    return gridArr;
-  }
-
-  return { addSymbol, displayGrid }
-
-})()
-
-const playersModule = (function Players() {
-
-  function playerChoice(choice, arr) {
-    if (choice >= 0 && choice < 3) {
-      arr[0][choice] = choice;
-    } else if (choice >= 3 && choice <= 5){
-      arr[1][choice - 3] = choice;
-    } else if (choice >= 6 && choice <= 8){
-      arr[2][choice - 6] = choice;
-    }
-  }
-
-  function checkUndefined(i, symbol) {
-    if (i !== undefined) {
-      return symbol;
-    }
-  }
-
-  function numToSymbol(arr, symbol) {
-    for (let i = 0; i < 3; i++) {
-      arr[i].forEach( e => {
-        checkUndefined(e, symbol)
-      })
-    }
-  }
-
-  function choosePosition(choice) {
-    this.position = choice;
-    playerChoice(choice, this.positionHistory)
-    numToSymbol(this.positionHistory, this.symbol)
-    return choice;
-  };
-
-  const players = 
-  [
-    {
-    name: "John",
-    symbol: 'X',
-    choosePosition,
-    positionHistory: [[], [], []]
-    },
-  
-    {
-    name: "Sue",
-    symbol: 'O',
-    choosePosition,
-    positionHistory: [[], [], []]
-    }
-  ]
-
-  function getPlayers() {
-    return { players, playerChoice }
-  }
-
-  return getPlayers;
-})()
+// later: function to check for both symbols
 
 
-function Controller() {
+function loopThroughGrid(grid, symbol) {
 
-  const players = playersModule();
+  for (let i = 0; i < grid.length; i++) {
+    let gridRowCheck = grid[i].every((sym) => {
+      return sym === symbol;
+    })
 
-  function determineTurn() {
-    
-    let turn;
-
-    if (players[0].positionHistory > 5) {
-      console.log('end game')
-    } else if (players[0].positionHistory.length === 0) {
-      turn = players[0];
-    } else if (players[0].positionHistory.length < players[1].positionHistory.length){
-      turn = players[0];
-    } else {
-      turn = players[1]
-    }
-
-    return turn;
+    return gridRowCheck;
 
   }
-
-  let turn = determineTurn();
-  let inputChoice = prompt(`${turn.name} Choose Position.`);
-  let position = turn.choosePosition(inputChoice)
-
-  function playerSelection(player, position) {
-    if (position >= 0 && position < 3) {
-      grid.addSymbol(0, position, player.symbol)
-    } else if (position >= 3 && position <= 5){
-      grid.addSymbol(1, position - 3, player.symbol)
-    } else if (position >= 6 && position <= 8) {
-      grid.addSymbol(2, position - 6, player.symbol)
-    }
-  }
-
-  function determineWinner() {
-    playersPositionHistory = [players[0].positionHistory, players[1].positionHistory];
-    console.log(playersPositionHistory);
-  }
-
-  playerSelection(players[0], position);
-
-  determineWinner();
-
 }
-
