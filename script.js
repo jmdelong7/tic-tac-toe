@@ -18,9 +18,34 @@ const grid = (function Grid() {
 
 const playersModule = (function Players() {
 
+  function playerChoice(choice, arr) {
+    if (choice >= 0 && choice < 3) {
+      arr[0][choice] = choice;
+    } else if (choice >= 3 && choice <= 5){
+      arr[1][choice - 3] = choice;
+    } else if (choice >= 6 && choice <= 8){
+      arr[2][choice - 6] = choice;
+    }
+  }
+
+  function checkUndefined(i, symbol) {
+    if (i !== undefined) {
+      return symbol;
+    }
+  }
+
+  function numToSymbol(arr, symbol) {
+    for (let i = 0; i < 3; i++) {
+      arr[i].forEach( e => {
+        checkUndefined(e, symbol)
+      })
+    }
+  }
+
   function choosePosition(choice) {
     this.position = choice;
-    this.positionHistory.push(choice);
+    playerChoice(choice, this.positionHistory)
+    numToSymbol(this.positionHistory, this.symbol)
     return choice;
   };
 
@@ -30,19 +55,19 @@ const playersModule = (function Players() {
     name: "John",
     symbol: 'X',
     choosePosition,
-    positionHistory: []
+    positionHistory: [[], [], []]
     },
   
     {
     name: "Sue",
     symbol: 'O',
     choosePosition,
-    positionHistory: []
+    positionHistory: [[], [], []]
     }
   ]
 
   function getPlayers() {
-    return players;
+    return { players, playerChoice }
   }
 
   return getPlayers;
@@ -84,9 +109,6 @@ function Controller() {
       grid.addSymbol(2, position - 6, player.symbol)
     }
   }
-
-  // Don't use grid, use players.positionHistory to determine winner
-  // Also have to deny overwrite of gridArr values.
 
   function determineWinner() {
     playersPositionHistory = [players[0].positionHistory, players[1].positionHistory];
