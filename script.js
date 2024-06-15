@@ -10,50 +10,64 @@
 //   - To declare game over we need to:
 //     - Check that all board cells are filled.
 
-let board = [["X", "O", "O"],["O", "X", "O"],["O", "X", "O"]];
+let board = [["X", "O", "O"],["O", "O", "O"],["O", "X", "X"]]
 // Use .fill to fill arrays with blank values
 
 // later: function to check for both symbols
 
-const columnWinCondition = [[0, 3, 6][1, 4, 7], [2, 5, 8]];
+const columnWinCondition = [[0, 3, 6][1, 4, 7], [2, 5, 8]]
 
-function checkWinnerInColumns(board) {
-
-  const isWinner = [];
-  let winningColumn;
-
-  for (let i = 0; i < board.length; i++) {
-    let columnArray = [];
-    for (let j = 0; j < board.length; j++) {
-      columnArray.push(board[j][i]);
-      winningColumn = i;
-    }
-    if (hasAllSameSymbol(columnArray)) {
-      [isWinner[0], isWinner[1]] = [winningColumn, columnArray[0]]
-    }
-  }
-
-  return isWinner;
-
-}
-
-function hasWinnerInRows(board) {
-
-  const isWinner = [];
-
+function checkWinInRows(board) {
+  
+  const isWinner = []
+  
   board.forEach( (row) => {
     if (hasAllSameSymbol(row)) {
       [isWinner[0], isWinner[1]] = [board.indexOf(row), row[0]]
     }
   })
-
-  return isWinner;
-
+  
+  return isWinner
 }
 
+function checkWinInColumns(board) {
+  
+  const isWinner = []
+  let winningColumn
+  
+  for (let i = 0; i < board.length; i++) {
+    let column = []
+    for (let j = 0; j < board.length; j++) {
+      column.push(board[j][i])
+      winningColumn = i
+    }
+    if (hasAllSameSymbol(columnArray)) {
+      [isWinner[0], isWinner[1]] = [winningColumn, column[0]]
+    }
+  }
+  
+  return isWinner
+}
+
+function checkWinInDiagonals(board) {
+
+  const isWinner = []
+  const diagonal = [[], []]
+
+  for (let i = 0; i < board.length; i++) {
+    diagonal[0].push(board[i][i])
+    diagonal[1].push(board[i][board.length - 1 - i])
+  }
+  
+  diagonal.forEach( (diag) => {
+    if (hasAllSameSymbol(diag)) {
+      [isWinner[0], isWinner[1]] = [diagonal.indexOf(diag), diag[0]]
+    }
+  })
+
+  return isWinner
+}
 
 function hasAllSameSymbol(arr) {
-  return arr.every((sym) => {return sym === arr[0]});
+  return arr.every((sym) => {return sym === arr[0]})
 }
-
-// Convert win conditions into arrays which we can call hasAllSameSymbol on.
