@@ -14,11 +14,27 @@ let grid = [["X", "X", "X"],["O", "X", "O"],["O", "X", "O"]];
 
 // later: function to check for both symbols
 
+const columnWinCondition = [[0, 3, 6][1, 4, 7], [2, 5, 8]];
 
-function loopThroughGrid(grid, symbol) {
+function checkWinnerInColumns(grid) {
+
+  const columnsInRows = [];
 
   for (let i = 0; i < grid.length; i++) {
-    let gridRowCheck = grid[i].every((sym) => {
+    let columnArray = [];
+    for (let j = 0; j < grid.length; j++) {
+      columnArray.push(grid[j][i]);
+    }
+    columnsInRows.push(columnArray);
+  }
+
+  return columnsInRows;
+}
+
+function checkWinnerInRows(grid, symbol) {
+
+  for (let i = 0; i < grid.length; i++) {
+    const gridRowCheck = grid[i].every((sym) => {
       return sym === symbol;
     })
 
