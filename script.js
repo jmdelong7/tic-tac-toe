@@ -10,7 +10,7 @@
 //   - To declare game over we need to:
 //     - Check that all board cells are filled.
 
-let board = [["X", "X", "X"],["O", "X", "O"],["O", "X", "O"]];
+let board = [["X", "O", "O"],["O", "X", "O"],["O", "X", "O"]];
 // Use .fill to fill arrays with blank values
 
 // later: function to check for both symbols
@@ -19,15 +19,23 @@ const columnWinCondition = [[0, 3, 6][1, 4, 7], [2, 5, 8]];
 
 function checkWinnerInColumns(board) {
 
+  const isWinner = [];
+  let winningColumn;
+
   for (let i = 0; i < board.length; i++) {
     let columnArray = [];
     for (let j = 0; j < board.length; j++) {
       columnArray.push(board[j][i]);
+      winningColumn = i;
+    }
+    if (hasAllSameSymbol(columnArray)) {
+      [isWinner[0], isWinner[1]] = [winningColumn, columnArray[0]]
     }
   }
 
-}
+  return isWinner;
 
+}
 
 function hasWinnerInRows(board) {
 
