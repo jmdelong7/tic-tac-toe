@@ -16,9 +16,42 @@ const grid = (function Grid() {
 
 })()
 
+const playersModule = (function Players() {
+
+  function choosePosition(choice) {
+    this.position = choice;
+    this.positionHistory.push(choice);
+    return choice;
+  };
+
+  const players = 
+  [
+    {
+    name: "John",
+    symbol: 'X',
+    choosePosition,
+    positionHistory: []
+    },
+  
+    {
+    name: "Sue",
+    symbol: 'O',
+    choosePosition,
+    positionHistory: []
+    }
+  ]
+
+  function getPlayers() {
+    return players;
+  }
+
+  return getPlayers;
+})()
+
+
 function Controller() {
 
-  const players = Players();
+  const players = playersModule();
 
   function determineTurn() {
     
@@ -52,26 +85,12 @@ function Controller() {
     }
   }
 
-
   // Don't use grid, use players.positionHistory to determine winner
   // Also have to deny overwrite of gridArr values.
-  const gridArr = grid.displayGrid();
-  const isSameValue = (value) => value === value;
 
   function determineWinner() {
-    for (let i = 0; i < 3; i++){
-      if (gridArr[i].every(isSameValue)) {
-        console.log(`${gridArr[i]}`)
-        return gridArr[i];
-      }
-    }
-
-  }
-
-  function endGame() {
-    console.log("Game over.")
-    function determineWinner() {
-    }
+    playersPositionHistory = [players[0].positionHistory, players[1].positionHistory];
+    console.log(playersPositionHistory);
   }
 
   playerSelection(players[0], position);
@@ -80,30 +99,3 @@ function Controller() {
 
 }
 
-function Players() {
-
-  function choosePosition(choice) {
-    this.position = choice;
-    this.positionHistory.push(choice);
-    return choice;
-  };
-
-  const players = 
-  [
-    {
-    name: "John",
-    symbol: 'X',
-    choosePosition,
-    positionHistory: []
-    },
-  
-    {
-    name: "Sue",
-    symbol: 'O',
-    choosePosition,
-    positionHistory: []
-    }
-  ]
-
-  return players;
-}
