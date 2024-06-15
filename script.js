@@ -16,7 +16,7 @@ let grid = [["X", "X", "X"],["O", "X", "O"],["O", "X", "O"]];
 
 const columnWinCondition = [[0, 3, 6][1, 4, 7], [2, 5, 8]];
 
-function checkWinnerInColumns(grid) {
+function columnsToRows(grid) {
 
   const columnsInRows = [];
 
@@ -42,3 +42,9 @@ function checkWinnerInRows(grid, symbol) {
 
   }
 }
+
+function hasAllSameSymbol(arr, symbol) {
+  arr.every((sym) => {return sym === symbol})
+}
+
+// Convert win conditions into arrays which we can call hasAllSameSymbol on.
