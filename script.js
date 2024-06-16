@@ -10,29 +10,26 @@ let board = [["X", "O", "X"],["O", "O", "O"],["O", "X", "X"]]
 
 function GameBoard() {
 
-  let gameBoard
+  let gameBoard = []
 
   function getGameBoard() {
     return gameBoard
   }
 
   function pushSymbol(row, col, symbol) {
-    board[row][col] = symbol
+    gameBoard[row][col] = symbol
   }
 
   function newBoard(dimension) {
 
-    const newBoard = []
-
     for (let i = 0; i < dimension; i++) {
-      newBoard.push(Array.from({length: dimension}, () => ''))
+      [gameBoard[i]] = [Array.from({length: dimension}, () => '')]
     }
-
-    return newBoard
+		
   }
 
   return {
-    newBoard, getGameBoard, pushSymbol, newBoard
+    newBoard, getGameBoard, pushSymbol
   }
 
 }
