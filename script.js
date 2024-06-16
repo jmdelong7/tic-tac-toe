@@ -9,20 +9,23 @@ let testBoard= [["X", "O", "X"],["O", "O", "O"],["O", "X", "X"]]
 
 function Players() {
 
-	const players = [
-		{
-			name: "Player 1",
-			symbol: "X",
-			addPlayerSymbol,
-		},
-		{
-			name: "Computer",
-			symbol: "O",
-			addPlayerSymbol,
-		}
-	]
+	const user = {
+		name: "Player",
+		symbol: "X",
+		move: makeMove	
+	}
+	
+	const computer = {
+		name: "Computer",
+		symbol: "O",
+		move: makeMove
+	}
 
-	return {players}
+	function makeMove(gameBoard, row, col) {
+		gameBoard[row][col] = this.symbol
+	}
+
+	return {user, computer}
 }
 
 function GameBoard() {
@@ -56,8 +59,22 @@ function GameBoard() {
 }
 
 function GameController() {
+	let gameBoard = GameBoard()
+	let board = gameBoard.getGameBoard()
 
-	function checkWinInRows(board) {
+	const players = Players()
+
+	function computerMove() {
+		const boardFlat = board.flat()
+
+		players.computer.move(board)
+	}
+
+	function nextTurn() {
+		
+	}
+
+	function checkWinInRows() {
 		
 		const isWinner = []
 		
@@ -70,7 +87,7 @@ function GameController() {
 		return isWinner
 	}
 
-	function checkWinInColumns(board) {
+	function checkWinInColumns() {
 		
 		const isWinner = []
 		let winningColumn
@@ -89,7 +106,7 @@ function GameController() {
 		return isWinner
 	}
 
-	function checkWinInDiagonals(board) {
+	function checkWinInDiagonals() {
 
 		const isWinner = []
 		const diagonal = [[], []]
@@ -108,17 +125,13 @@ function GameController() {
 		return isWinner
 	}
 
-	function checkGameOver(board) {
+	function checkGameOver() {
 
-		const checkSymbolInCells = board.map( (row) => {
-			return row.map( (cell) => {
-				return cell === "X" || cell === "O"
-			})
-		})
+		const symbolCheck = checkSymbolInCells()
 
 		if (
-			checkSymbolInCells.flat().length === board.flat().length &&
-			checkSymbolInCells.flat().every(cell => cell === true)
+			symbolCheck.flat().length === board.flat().length &&
+			symbolCheck.flat().every(cell => cell === true)
 		){
 			console.log("Game Over")
 		} else {
@@ -130,4 +143,38 @@ function GameController() {
 	function hasAllSameSymbol(arr) {
 		return arr.every(sym => sym === arr[0])
 	}
+
+	function checkSymbolInCells() {
+		board.map( (row) => {
+			return row.map( (cell) => {
+				return cell === "X" || cell === "O"
+			})
+		})
+	}
+
+	// get gameboard open spots
+	// loop through gameboard
+	// find open cells
+	// return open cells
+	function getOpenBoardCells() {
+
+		board.forEach()
+
+		for (let i = 0; i < board.length * 2; i++) {
+
+		}
+	}
+
+
+	function checkGameStatus() {
+		checkWinInColumns()
+		checkWinInRows()
+		checkWinInDiagonals()
+		checkGameOver()
+	}
+
+	return {
+		getGameBoard: board
+	}
+
 }
