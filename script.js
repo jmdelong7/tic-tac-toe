@@ -1,20 +1,41 @@
-// - If 3 of same symbol in a row - declare winner.
+// - Board
 //   - Array of 3 arrays.
-//   - Check if 3 of the same symbols are in a straight line.
-//   - Declare winner.
-//   - If 9 spots are filled and no winner, declare game over.
-//   - To declare winner we need to:
-//     - Check each board row for all same symbol.
-//     - Check each board column for all same symbol.
-//     - Check both diagonals for all same symbol.
-//   - To declare game over we need to:
-//     - Check that all board cells are filled.
+//   - Add symbol to board.
+//   - Clear board if winner or game over.
+//   - Have it private so it can't be accessed by players.
 
-let board = [["X", "O", "X"],["O", "O", "O"],["O", "X", "X"]]
+
 // Use .fill to fill arrays with blank values
-// later: function to check for both symbols
+let board = [["X", "O", "X"],["O", "O", "O"],["O", "X", "X"]]
 
-const columnWinCondition = [[0, 3, 6][1, 4, 7], [2, 5, 8]]
+function GameBoard() {
+
+  let gameBoard
+
+  function getGameBoard() {
+    return gameBoard
+  }
+
+  function pushSymbol(row, col, symbol) {
+    board[row][col] = symbol
+  }
+
+  function newBoard(dimension) {
+
+    const newBoard = []
+
+    for (let i = 0; i < dimension; i++) {
+      newBoard.push(Array.from({length: dimension}, () => ''))
+    }
+
+    return newBoard
+  }
+
+  return {
+    newBoard, getGameBoard, pushSymbol, newBoard
+  }
+
+}
 
 function checkWinInRows(board) {
   
@@ -80,6 +101,8 @@ function checkGameOver(board) {
     checkSymbolInCells.flat().every(cell => cell === true)
   ){
     console.log("Game Over")
+  } else {
+    console.log("Continue Game")
   }
 
 }
