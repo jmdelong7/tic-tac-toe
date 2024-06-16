@@ -30,6 +30,8 @@
   - Clear board if winner or game over.
   - Have it private so it can't be accessed by players.
 
-- Place "X" in board cell and computer pick random open cell and place "O"
-
--
+- Players
+  - Place "X" in board cell and computer pick random open cell and place "O"
+  - Utilize GameBoard() to add symbol at player1 location specified.
+  - If player1 add symbol, computer add symbol
+  - then run win conditions
