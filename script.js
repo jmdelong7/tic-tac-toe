@@ -10,9 +10,8 @@
 //   - To declare game over we need to:
 //     - Check that all board cells are filled.
 
-let board = [["X", "O", "O"],["O", "O", "O"],["O", "X", "X"]]
+let board = [["X", "O", "X"],["O", "O", "O"],["O", "X", "X"]]
 // Use .fill to fill arrays with blank values
-
 // later: function to check for both symbols
 
 const columnWinCondition = [[0, 3, 6][1, 4, 7], [2, 5, 8]]
@@ -68,6 +67,23 @@ function checkWinInDiagonals(board) {
   return isWinner
 }
 
+function checkGameOver(board) {
+
+  const checkSymbolInCells = board.map( (row) => {
+    return row.map( (cell) => {
+      return cell === "X" || cell === "O"
+    })
+  })
+
+  if (
+    checkSymbolInCells.flat().length === board.flat().length &&
+    checkSymbolInCells.flat().every(cell => cell === true)
+  ){
+    console.log("Game Over")
+  }
+
+}
+
 function hasAllSameSymbol(arr) {
-  return arr.every((sym) => {return sym === arr[0]})
+  return arr.every(sym => sym === arr[0])
 }
