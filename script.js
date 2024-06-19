@@ -7,23 +7,23 @@
 
 let testBoard= [["X", "O", "X"],["O", "O", "O"],["O", "X", "X"]]
 
-function Players() {
+function Players(makeMove) {
 
 	const user = {
 		name: "Player",
 		symbol: "X",
-		move: makeMove	
+		playerMove	
 	}
 	
 	const computer = {
 		name: "Computer",
 		symbol: "O",
-		move: makeMove
+		playerMove
 	}
 
-	function makeMove(gameBoard, row, col) {
-		gameBoard[row][col] = this.symbol
-	}
+	function playerMove(row, col) {
+		makeMove(row, col, this.symbol)
+  }
 
 	return {user, computer}
 }
@@ -36,13 +36,9 @@ function GameBoard() {
     return gameBoard
   }
 
-  function pushSymbol(row, col, symbol) {
+  function changeSymbol(row, col, symbol) {
     gameBoard[row][col] = symbol
   }
-
-	function getPushSymbol(row, col, symbol){
-		pushSymbol(row, col, symbol)
-	}
 
   function createNewBoard(dimension) {
 
@@ -53,7 +49,7 @@ function GameBoard() {
   }
 
   return {
-    createNewBoard, getGameBoard, getPushSymbol
+    createNewBoard, getGameBoard, changeSymbol
   }
 
 }
@@ -62,13 +58,31 @@ function GameController() {
 	let gameBoard = GameBoard()
 	let board = gameBoard.getGameBoard()
 
-	const players = Players()
+	const players = Players(gameBoard.changeSymbol)
 
 	function computerMove() {
-		const boardFlat = board.flat()
+    
+    const openCells = []
 
-		players.computer.move(board)
-	}
+    for (let i = 0; i < board.length; i++) {
+      for(let j = 0; j < board.length; j++) {
+        if (board[i][j] !== 'X' && board[i][j] !== 'O') {
+          openCells.push([i, j])
+        }
+      }
+    }
+
+    function getRandomInt() {
+      const min = 0
+      const max = Math.ceil(openCells.length)
+      return Math.floor(Math.random() * (max - min)) + min
+    }
+
+    const computerChoice = openCells[getRandomInt()]
+
+    players.computer.playerMove(computerChoice)
+
+  }
 
 	function nextTurn() {
 		
