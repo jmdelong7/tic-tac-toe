@@ -77,10 +77,9 @@ function GameController() {
       const max = Math.ceil(openCells.length)
       return Math.floor(Math.random() * (max - min)) + min
     }
-
     const computerChoice = openCells[getRandomInt()]
 
-    players.computer.playerMove(computerChoice)
+    players.computer.playerMove(computerChoice[0], computerChoice[1])
 
   }
 
