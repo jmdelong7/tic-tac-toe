@@ -83,9 +83,31 @@ function GameController() {
 
   }
 
-	function nextTurn() {
-		
-	}
+  function playerMove(row, column) {
+
+    const openCells = []
+    const userChoice = [row, column]
+    
+    for (let i = 0; i < board.length; i++) {
+      for(let j = 0; j < board.length; j++) {
+        if (board[i][j] !== 'X' && board[i][j] !== 'O') {
+          openCells.push([i, j])
+        }
+      }
+    }
+
+    // boolean for if userChoice is in openCells
+    const choiceAvail = openCells.some(
+      arr => (arr.every((val, index) => val === userChoice[index]))
+    )
+
+    if (choiceAvail === true) {
+      players.user.playerMove(row, column)
+    } else {
+      console.log("Cell not available, go again!")
+    }
+
+  }
 
 	function checkWinInRows() {
 		
@@ -165,20 +187,6 @@ function GameController() {
 		})
 	}
 
-	// get gameboard open spots
-	// loop through gameboard
-	// find open cells
-	// return open cells
-	function getOpenBoardCells() {
-
-		board.forEach()
-
-		for (let i = 0; i < board.length * 2; i++) {
-
-		}
-	}
-
-
 	function checkGameStatus() {
 		checkWinInColumns()
 		checkWinInRows()
@@ -187,7 +195,10 @@ function GameController() {
 	}
 
 	return {
-		getGameBoard: board
+		getGameBoard: board, 
+    newGame: gameBoard.createNewBoard,
+    computerMove,
+    playerMove
 	}
 
 }
