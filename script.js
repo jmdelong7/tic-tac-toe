@@ -1,12 +1,3 @@
-// - Players
-//   - Place "X" in board cell and computer pick random open cell and place "O"
-//   - Utilize GameBoard() to add symbol at player1 location specified.
-//   - If player1 add symbol, computer add symbol
-//   - then run win conditions
-
-
-let testBoard= [["X", "O", "X"],["O", "O", "O"],["O", "X", "X"]]
-
 function Players(makeMove) {
 
 	const user = {
@@ -55,8 +46,8 @@ function GameBoard() {
 }
 
 function GameController() {
-	let gameBoard = GameBoard()
-	let board = gameBoard.getGameBoard()
+	const gameBoard = GameBoard()
+	const board = gameBoard.getGameBoard()
 
 	const players = Players(gameBoard.changeSymbol)
 
@@ -119,7 +110,7 @@ function GameController() {
 			}
 		})
 		
-		return isWinner
+    return isWinner.length ? isWinner : null
 	}
 
 	function checkWinInColumns() {
@@ -138,7 +129,7 @@ function GameController() {
 			}
 		}
 		
-		return isWinner
+    return isWinner.length ? isWinner : null
 	}
 
 	function checkWinInDiagonals() {
@@ -157,7 +148,7 @@ function GameController() {
 			}
 		})
 
-		return isWinner
+    return isWinner.length ? isWinner : null
 	}
 
 	function checkGameOver() {
