@@ -63,6 +63,10 @@ function GameController() {
       }
     }
 
+    if (openCells.length === 0) {
+      return null
+    }
+
     function getRandomInt() {
       const min = 0
       const max = Math.ceil(openCells.length)
@@ -71,8 +75,6 @@ function GameController() {
     const computerChoice = openCells[getRandomInt()]
 
     players.computer.playerMove(computerChoice[0], computerChoice[1])
-
-    checkGameStatus()
 
   }
 
@@ -96,10 +98,11 @@ function GameController() {
 
     if (choiceAvail === true) {
       players.user.playerMove(row, column)
+      computerMove()
     } else {
       console.log("Cell not available, go again!")
     }
-
+    
     checkGameStatus()
 
   }
@@ -171,9 +174,7 @@ function GameController() {
 
 	function checkGameOver() {
     const flatGameBoard = board.flat()
-    console.log(flatGameBoard)
     const boardFilled = flatGameBoard.every(val => val ==='X' || val ==='O')
-    console.log(boardFilled)
     return boardFilled ? console.log("Tie. Game Over.") : null
 	}
 
