@@ -1,0 +1,85 @@
+/* https://mattbrictson.com/blog/css-normalize-and-reset#my-recommendation */
+
+/* :root font added: 
+  --system-ui: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  https://css-tricks.com/snippets/css/system-font-stack/
+ */
+
+/* Personal changes
+    :root - box-sizing: border-box;
+    input - appearance: none;
+    body - margin: 0;
+*/
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  margin: 0;
+}
+
+:root {
+  line-height: 1.5;
+  --system-ui: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, figure, p, ol, ul {
+  margin: 0;
+}
+
+ol, ul {
+  list-style: none;
+  padding-inline: 0;
+}
+
+h1, h2, h3, h4, h5 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+img {
+  display: block;
+  max-inline-size: 100%;
+}
+
+/* Template above, new style below */
+
+body {
+  color: white;
+  background-color: black;
+  font-family: 'Roboto';
+  display: flex;
+  justify-content: center;
+}
+
+.main-container {
+  width: 500px;
+}
+
+h1 {
+  font-size: 5rem;
+  text-align: center;
+}
+
+.cell {
+  border: 5px solid white;
+  padding: 70px;
+}
+
+.game-container {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  grid-template-columns: repeat(3, 150px);
+  grid-template-rows: repeat(3, 150px);
+}
+
+.row {
+  grid-column: 1 / 4;
+  display: grid;
+  grid-template-columns: repeat(3, 150px);
+  /* border: 5px solid white;
+  padding: 70px; */
+}
