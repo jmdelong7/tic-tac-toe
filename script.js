@@ -102,7 +102,7 @@ function GameController() {
     } else {
       console.log("Cell not available, go again!")
     }
-    
+
     checkGameStatus()
 
   }
@@ -193,7 +193,7 @@ function GameController() {
 
 	return {
 		getGameBoard: board, 
-    newGame: gameBoard.createNewBoard,
+    newGame: gameBoard.createNewBoard(3),
     computerMove,
     playerMove,
 	}
