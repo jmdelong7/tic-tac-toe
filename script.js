@@ -170,16 +170,11 @@ function GameController() {
 	}
 
 	function checkGameOver() {
-
-		const symbolCheck = checkSymbolInCells()
-
-		if (
-			symbolCheck.flat(Infinity).length === board.flat(Infinity).length &&
-			symbolCheck.flat(Infinity).every(cell => cell === true)
-		){
-			console.log("Game Over")
-		}
-
+    const flatGameBoard = board.flat()
+    console.log(flatGameBoard)
+    const boardFilled = flatGameBoard.every(val => val ==='X' || val ==='O')
+    console.log(boardFilled)
+    return boardFilled ? console.log("Tie. Game Over.") : null
 	}
 
 	function hasAllSameSymbol(arr) {
@@ -188,18 +183,11 @@ function GameController() {
     }
 	}
 
-	function checkSymbolInCells() {
-		board.map( (row) => {
-			return row.map( (cell) => {
-				return cell === "X" || cell === "O"
-			})
-		})
-	}
-
 	function checkGameStatus() {
     checkWinInRows()
     checkWinInColumns()
     checkWinInDiagonals()
+    checkGameOver()
 	}
 
 	return {
