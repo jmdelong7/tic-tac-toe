@@ -72,6 +72,8 @@ function GameController() {
 
     players.computer.playerMove(computerChoice[0], computerChoice[1])
 
+    checkGameStatus()
+
   }
 
   function playerMove(row, column) {
@@ -98,6 +100,8 @@ function GameController() {
       console.log("Cell not available, go again!")
     }
 
+    checkGameStatus()
+
   }
 
 	function checkWinInRows() {
@@ -110,7 +114,12 @@ function GameController() {
 			}
 		})
 		
-    return isWinner.length ? isWinner : null
+    if (isWinner.length > 0 && isWinner[1] === 'X') {
+      console.log("You Win!")
+    } else if (isWinner.length > 0 && isWinner[1] === 'O') {
+      console.log("You Lose.")
+    }
+
 	}
 
 	function checkWinInColumns() {
@@ -124,12 +133,17 @@ function GameController() {
 				column.push(board[j][i])
 				winningColumn = i
 			}
-			if (hasAllSameSymbol(columnArray)) {
+			
+      if (hasAllSameSymbol(column)) {
 				[isWinner[0], isWinner[1]] = [winningColumn, column[0]]
 			}
 		}
 		
-    return isWinner.length ? isWinner : null
+    if (isWinner.length > 0 && isWinner[1] === 'X') {
+      console.log("You Win!")
+    } else if (isWinner.length > 0 && isWinner[1] === 'O') {
+      console.log("You Lose.")
+    }
 	}
 
 	function checkWinInDiagonals() {
@@ -148,7 +162,11 @@ function GameController() {
 			}
 		})
 
-    return isWinner.length ? isWinner : null
+    if (isWinner.length > 0 && isWinner[1] === 'X') {
+      console.log("You Win!")
+    } else if (isWinner.length > 0 && isWinner[1] === 'O') {
+      console.log("You Lose.")
+    }
 	}
 
 	function checkGameOver() {
@@ -156,18 +174,18 @@ function GameController() {
 		const symbolCheck = checkSymbolInCells()
 
 		if (
-			symbolCheck.flat().length === board.flat().length &&
-			symbolCheck.flat().every(cell => cell === true)
+			symbolCheck.flat(Infinity).length === board.flat(Infinity).length &&
+			symbolCheck.flat(Infinity).every(cell => cell === true)
 		){
 			console.log("Game Over")
-		} else {
-			console.log("Continue Game")
 		}
 
 	}
 
 	function hasAllSameSymbol(arr) {
-		return arr.every(sym => sym === arr[0])
+    if (arr[0] === 'X' || arr[0] === 'O'){
+		  return arr.every(sym => sym === arr[0])
+    }
 	}
 
 	function checkSymbolInCells() {
@@ -179,17 +197,16 @@ function GameController() {
 	}
 
 	function checkGameStatus() {
-		checkWinInColumns()
-		checkWinInRows()
-		checkWinInDiagonals()
-		checkGameOver()
+    checkWinInRows()
+    checkWinInColumns()
+    checkWinInDiagonals()
 	}
 
 	return {
 		getGameBoard: board, 
     newGame: gameBoard.createNewBoard,
     computerMove,
-    playerMove
+    playerMove,
 	}
 
 }
