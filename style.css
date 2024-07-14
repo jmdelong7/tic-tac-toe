@@ -52,10 +52,12 @@ body {
   font-family: 'Roboto';
   display: flex;
   justify-content: center;
+  position: relative;
 }
 
-.main-container {
-  width: 500px;
+.main-container,
+.grid-container {
+  width: 450px;
 }
 
 h1 {
@@ -64,8 +66,14 @@ h1 {
 }
 
 .cell {
-  border: 5px solid white;
-  padding: 70px;
+  font-size: 14rem;
+  text-align: center;
+  width: 150px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(35, 81, 121);
 }
 
 .game-container {
@@ -74,12 +82,48 @@ h1 {
   justify-content: center;
   grid-template-columns: repeat(3, 150px);
   grid-template-rows: repeat(3, 150px);
+  margin-top: 25px;
 }
 
-.row {
-  grid-column: 1 / 4;
-  display: grid;
-  grid-template-columns: repeat(3, 150px);
-  /* border: 5px solid white;
-  padding: 70px; */
+.grid-container {
+  position: absolute;
+  top: 100px;
+}
+
+.vert-line-1,
+.vert-line-2,
+.horz-line-1,
+.horz-line-2 {
+  position: absolute;
+  margin: 0;
+}
+
+.vert-line-1,
+.vert-line-2 {
+  width: 10px;
+  height: 450px;
+  background-color: white;
+}
+
+.vert-line-1 {
+  left: 145px;
+}
+
+.vert-line-2 {
+  left: 295px;
+}
+
+.horz-line-1,
+.horz-line-2 {
+  height: 10px;
+  width: 450px;
+  background-color: white;
+}
+
+.horz-line-1 {
+  top: 145px;
+}
+
+.horz-line-2 {
+  top: 295px;
 }
