@@ -79,6 +79,15 @@ function GameController() {
   }
 
   function playerMove(row, column) {
+    
+    const gameContainer = document.querySelector('.game-container')
+    Array.from(gameContainer.children).forEach(child => {
+      child.addEventListener('click', addSymbol)
+    })
+
+    function addSymbol(cell) {
+      cell.target.textContent = 'X'
+    }
 
     const openCells = []
     const userChoice = [row, column]
@@ -199,3 +208,5 @@ function GameController() {
 	}
 
 }
+
+

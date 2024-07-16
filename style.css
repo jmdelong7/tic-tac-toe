@@ -74,7 +74,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgb(35, 81, 121);
 }
 
 .game-container {
@@ -83,12 +82,12 @@ body {
   justify-content: center;
   grid-template-columns: repeat(3, 150px);
   grid-template-rows: repeat(3, 150px);
-  margin-top: 60px;
+  margin-top: 50px;
 }
 
 .grid-container {
   position: absolute;
-  top: 150px;
+  top: 140px;
 }
 
 .vert-line-1,
