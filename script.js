@@ -32,10 +32,17 @@ function GameBoard() {
   }
 
   function createNewBoard(dimension) {
-
     for (let i = 0; i < dimension; i++) {
       [gameBoard[i]] = [Array.from({length: dimension}, () => '')]
     }
+
+    const gameContainer = document.querySelector('#game-container')
+
+    Array.from(gameContainer.children).forEach( child => {
+      child.addEventListener('click', e => {
+        e.target.textContent = 'X'
+      })
+    })
 
   }
 
@@ -46,11 +53,11 @@ function GameBoard() {
 }
 
 function GameController() {
-	const gameBoard = GameBoard()
+	
+  const gameBoard = GameBoard()
 	const board = gameBoard.getGameBoard()
-
 	const players = Players(gameBoard.changeSymbol)
-
+    
 	function computerMove() {
     
     const openCells = []
@@ -80,15 +87,6 @@ function GameController() {
 
   function playerMove(row, column) {
     
-    const gameContainer = document.querySelector('.game-container')
-    Array.from(gameContainer.children).forEach(child => {
-      child.addEventListener('click', addSymbol)
-    })
-
-    function addSymbol(cell) {
-      cell.target.textContent = 'X'
-    }
-
     const openCells = []
     const userChoice = [row, column]
     

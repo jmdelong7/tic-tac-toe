@@ -76,7 +76,7 @@ body {
   justify-content: center;
 }
 
-.game-container {
+#game-container {
   display: grid;
   align-items: center;
   justify-content: center;
