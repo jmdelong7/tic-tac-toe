@@ -29,6 +29,7 @@ function GameBoard() {
 
   function changeSymbol(row, col, symbol) {
     gameBoard[row][col] = symbol
+	document.querySelector(`#cell-${row}-${col}`).textContent = symbol
   }
 
   function createNewBoard(dimension) {
@@ -54,7 +55,7 @@ function GameBoard() {
 
 function GameController() {
 	
-  const gameBoard = GameBoard()
+	const gameBoard = GameBoard()
 	const board = gameBoard.getGameBoard()
 	const players = Players(gameBoard.changeSymbol)
     
