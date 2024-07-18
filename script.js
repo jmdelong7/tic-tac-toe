@@ -21,7 +21,7 @@ function Players(makeMove) {
 
 function GameBoard() {
 
-  let gameBoard = []
+  let gameBoard = Array.from({length: 3}, () => Array(3).fill(''))
 
   function getGameBoard() {
     return gameBoard
@@ -32,18 +32,12 @@ function GameBoard() {
 	document.querySelector(`#cell-${row}-${col}`).textContent = symbol
   }
 
-  function createNewBoard(dimension) {
-    for (let i = 0; i < dimension; i++) {
-      [gameBoard[i]] = [Array.from({length: dimension}, () => '')]
-    }
+  function createNewBoard() {
 
-    const gameContainer = document.querySelector('#game-container')
-
-    Array.from(gameContainer.children).forEach( child => {
-      child.addEventListener('click', e => {
-        e.target.textContent = 'X'
-      })
-    })
+	gameBoard = Array.from({length: 3}, () => Array(3).fill(''))
+	document.querySelectorAll('.cell').forEach( cell => {
+		cell.textContent = ''
+	})
 
   }
 
@@ -83,7 +77,6 @@ function GameController() {
     const computerChoice = openCells[getRandomInt()]
 
     players.computer.playerMove(computerChoice[0], computerChoice[1])
-
   }
 
   function playerMove(row, column) {
@@ -201,11 +194,14 @@ function GameController() {
 
 	return {
 		getGameBoard: board, 
-    newGame: gameBoard.createNewBoard(3),
+    newGame: gameBoard.createNewBoard(),
     computerMove,
     playerMove,
 	}
 
 }
+
+const game = GameController()
+
 
 

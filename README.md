@@ -35,3 +35,7 @@
   - Utilize GameBoard() to add symbol at player1 location specified.
   - If player1 add symbol, computer add symbol
   - then run win conditions
+
+  ----
+  change cell content to gameboard array
+  update on click/after computer move
