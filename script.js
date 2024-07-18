@@ -193,7 +193,7 @@ function GameController() {
 	}
 
 	return {
-		getGameBoard: board, 
+	getGameBoard: board, 
     newGame: gameBoard.createNewBoard(),
     computerMove,
     playerMove,
@@ -202,6 +202,12 @@ function GameController() {
 }
 
 const game = GameController()
-
+const cells = document.querySelectorAll('.cell')
+cells.forEach( cell => {
+	cell.addEventListener('click', e => {
+		const [row, col] = e.target.id.split('-').slice(1).map(Number)
+		game.playerMove(row, col)
+	})
+})
 
 
