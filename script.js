@@ -184,9 +184,15 @@ function GameController() {
     return new Promise(resolve => {
       setTimeout(() => {
         alert(bool ? "You Win!" : "You Lose!")
+        newGame()
         resolve()
       }, 10)
     })
+  }
+
+  async function newGame() {
+    gameBoard.createNewBoard()
+    board = gameBoard.getGameBoard()
   }
 
   async function checkGameStatus() {
@@ -198,10 +204,7 @@ function GameController() {
 
   return {
     get board() { return gameBoard.getGameBoard() }, 
-    newGame: () => {
-      gameBoard.createNewBoard()
-      board = gameBoard.getGameBoard()
-    },
+    newGame,
     playerMove,
   }
 }
