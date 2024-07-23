@@ -1,26 +1,20 @@
 function Players(makeMove) {
-
-	const user = {
-		name: "Player",
-		symbol: "X",
-		playerMove	
-	}
-	
-	const computer = {
-		name: "Computer",
-		symbol: "O",
-		playerMove
-	}
-
-	function playerMove(row, col) {
-		makeMove(row, col, this.symbol)
+  const user = {
+    name: "Player",
+    symbol: "X",
+    playerMove: async (row, col) => await makeMove(row, col, "X")
+  }
+  
+  const computer = {
+    name: "Computer",
+    symbol: "O",
+    playerMove: async (row, col) => await makeMove(row, col, "O")
   }
 
-	return {user, computer}
+  return {user, computer}
 }
 
 function GameBoard() {
-
   let gameBoard = Array.from({length: 3}, () => Array(3).fill(''))
 
   function getGameBoard() {
@@ -29,32 +23,32 @@ function GameBoard() {
 
   function changeSymbol(row, col, symbol) {
     gameBoard[row][col] = symbol
-	document.querySelector(`#cell-${row}-${col}`).textContent = symbol
+    return new Promise(resolve => {
+      setTimeout(() => {
+        document.querySelector(`#cell-${row}-${col}`).textContent = symbol
+        resolve()
+      }, 10)
+    })
   }
 
   function createNewBoard() {
-
-	gameBoard = Array.from({length: 3}, () => Array(3).fill(''))
-	document.querySelectorAll('.cell').forEach( cell => {
-		cell.textContent = ''
-	})
-
+    gameBoard = Array.from({length: 3}, () => Array(3).fill(''))
+    document.querySelectorAll('.cell').forEach(cell => {
+      cell.textContent = ''
+    })
   }
 
   return {
     createNewBoard, getGameBoard, changeSymbol
   }
-
 }
 
 function GameController() {
-	
-	const gameBoard = GameBoard()
-	const board = gameBoard.getGameBoard()
-	const players = Players(gameBoard.changeSymbol)
+  let gameBoard = GameBoard()
+  let board = gameBoard.getGameBoard()
+  const players = Players(gameBoard.changeSymbol)
     
-	function computerMove() {
-    
+  async function computerMove() {
     const openCells = []
 
     for (let i = 0; i < board.length; i++) {
@@ -76,11 +70,11 @@ function GameController() {
     }
     const computerChoice = openCells[getRandomInt()]
 
-    players.computer.playerMove(computerChoice[0], computerChoice[1])
+    await players.computer.playerMove(computerChoice[0], computerChoice[1])
+    board = gameBoard.getGameBoard()
   }
 
-  function playerMove(row, column) {
-    
+  async function playerMove(row, column) {
     const openCells = []
     const userChoice = [row, column]
     
@@ -92,122 +86,131 @@ function GameController() {
       }
     }
 
-    // boolean for if userChoice is in openCells
     const choiceAvail = openCells.some(
       arr => (arr.every((val, index) => val === userChoice[index]))
     )
 
     if (choiceAvail === true) {
-      players.user.playerMove(row, column)
-      computerMove()
+      await players.user.playerMove(row, column)
+      board = gameBoard.getGameBoard()
+      await computerMove()
     } else {
-      console.log("Cell not available, go again!")
+      alert("Cell not available, go again!")
+      return
     }
 
-    checkGameStatus()
-
+    await checkGameStatus()
   }
 
-	function checkWinInRows() {
-		
-		const isWinner = []
-		
-		board.forEach( (row) => {
-			if (hasAllSameSymbol(row)) {
-				[isWinner[0], isWinner[1]] = [board.indexOf(row), row[0]]
-			}
-		})
-		
+  async function checkWinInRows() {
+    const isWinner = []
+    
+    board.forEach((row) => {
+      if (hasAllSameSymbol(row)) {
+        [isWinner[0], isWinner[1]] = [board.indexOf(row), row[0]]
+      }
+    })
+    
     if (isWinner.length > 0 && isWinner[1] === 'X') {
-      console.log("You Win!")
+      await alertUserWinLoss(true)
     } else if (isWinner.length > 0 && isWinner[1] === 'O') {
-      console.log("You Lose.")
+      await alertUserWinLoss(false)
     }
+  }
 
-	}
-
-	function checkWinInColumns() {
-		
-		const isWinner = []
-		let winningColumn
-		
-		for (let i = 0; i < board.length; i++) {
-			let column = []
-			for (let j = 0; j < board.length; j++) {
-				column.push(board[j][i])
-				winningColumn = i
-			}
-			
+  async function checkWinInColumns() {
+    const isWinner = []
+    let winningColumn
+    
+    for (let i = 0; i < board.length; i++) {
+      let column = []
+      for (let j = 0; j < board.length; j++) {
+        column.push(board[j][i])
+        winningColumn = i
+      }
+      
       if (hasAllSameSymbol(column)) {
-				[isWinner[0], isWinner[1]] = [winningColumn, column[0]]
-			}
-		}
-		
-    if (isWinner.length > 0 && isWinner[1] === 'X') {
-      console.log("You Win!")
-    } else if (isWinner.length > 0 && isWinner[1] === 'O') {
-      console.log("You Lose.")
+        [isWinner[0], isWinner[1]] = [winningColumn, column[0]]
+      }
     }
-	}
+    
+    if (isWinner.length > 0 && isWinner[1] === 'X') {
+      await alertUserWinLoss(true)
+    } else if (isWinner.length > 0 && isWinner[1] === 'O') {
+      await alertUserWinLoss(false)
+    }
+  }
 
-	function checkWinInDiagonals() {
+  async function checkWinInDiagonals() {
+    const isWinner = []
+    const diagonal = [[], []]
 
-		const isWinner = []
-		const diagonal = [[], []]
-
-		for (let i = 0; i < board.length; i++) {
-			diagonal[0].push(board[i][i])
-			diagonal[1].push(board[i][board.length - 1 - i])
-		}
-		
-		diagonal.forEach( (diag) => {
-			if (hasAllSameSymbol(diag)) {
-				[isWinner[0], isWinner[1]] = [diagonal.indexOf(diag), diag[0]]
-			}
-		})
+    for (let i = 0; i < board.length; i++) {
+      diagonal[0].push(board[i][i])
+      diagonal[1].push(board[i][board.length - 1 - i])
+    }
+    
+    diagonal.forEach((diag) => {
+      if (hasAllSameSymbol(diag)) {
+        [isWinner[0], isWinner[1]] = [diagonal.indexOf(diag), diag[0]]
+      }
+    })
 
     if (isWinner.length > 0 && isWinner[1] === 'X') {
-      console.log("You Win!")
+      await alertUserWinLoss(true)
     } else if (isWinner.length > 0 && isWinner[1] === 'O') {
-      console.log("You Lose.")
+      await alertUserWinLoss(false)
     }
-	}
+  }
 
-	function checkGameOver() {
+  async function checkGameOver() {
     const flatGameBoard = board.flat()
-    const boardFilled = flatGameBoard.every(val => val ==='X' || val ==='O')
-    return boardFilled ? console.log("Tie. Game Over.") : null
-	}
-
-	function hasAllSameSymbol(arr) {
-    if (arr[0] === 'X' || arr[0] === 'O'){
-		  return arr.every(sym => sym === arr[0])
+    const boardFilled = flatGameBoard.every(val => val === 'X' || val === 'O')
+    if (boardFilled) {
+      await new Promise(resolve => setTimeout(() => {
+        alert("Tie!")
+        resolve()
+      }, 10))
     }
-	}
+  }
 
-	function checkGameStatus() {
-    checkWinInRows()
-    checkWinInColumns()
-    checkWinInDiagonals()
-    checkGameOver()
-	}
+  function hasAllSameSymbol(arr) {
+    if (arr[0] === 'X' || arr[0] === 'O'){
+      return arr.every(sym => sym === arr[0])
+    }
+  }
 
-	return {
-	getGameBoard: board, 
-    newGame: gameBoard.createNewBoard(),
-    computerMove,
+  function alertUserWinLoss(bool) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        alert(bool ? "You Win!" : "You Lose!")
+        resolve()
+      }, 10)
+    })
+  }
+
+  async function checkGameStatus() {
+    await checkWinInRows()
+    await checkWinInColumns()
+    await checkWinInDiagonals()
+    await checkGameOver()
+  }
+
+  return {
+    get board() { return gameBoard.getGameBoard() }, 
+    newGame: () => {
+      gameBoard.createNewBoard()
+      board = gameBoard.getGameBoard()
+    },
     playerMove,
-	}
-
+  }
 }
 
 const game = GameController()
 const cells = document.querySelectorAll('.cell')
-cells.forEach( cell => {
-	cell.addEventListener('click', e => {
-		const [row, col] = e.target.id.split('-').slice(1).map(Number)
-		game.playerMove(row, col)
-	})
+cells.forEach(cell => {
+  cell.addEventListener('click', async (e) => {
+    const [row, col] = e.target.id.split('-').slice(1).map(Number)
+    await game.playerMove(row, col)
+  })
 })
-
-
